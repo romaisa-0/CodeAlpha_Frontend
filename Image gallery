@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Art Gallery</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <img src="https://t3.ftcdn.net/jpg/03/59/21/62/360_F_359216202_AXS6T4d8rCETqVM9oH1dRfQpxWd3swws.jpg" alt="Art Gallery Logo" class="logo">
+        <h1>Welcome to My Art Gallery</h1>
+    </header>
+    <div class="button-container">
+        <button id="show-sketches">Show Sketches</button>
+        <button id="show-drawings">Show Drawings</button>
+    </div>
+    <div id="sketches-gallery" class="gallery-container hidden">
+        <h2>Sketches</h2>
+        <div class="gallery">
+            <img src="https://pics.craiyon.com/2024-01-27/4uP2FG5nTDqA_TX42-omNg.webp" alt="Sketch 1" class="gallery-image">
+            <img src="https://i.pinimg.com/736x/38/16/a4/3816a4b2399067eaf7524e9d0e23108d.jpg" alt="Sketch 2" class="gallery-image">
+            <img src="https://thumbs.dreamstime.com/b/sketches-can-be-made-any-drawing-medium-term-most-often-applied-to-graphic-work-executed-dry-such-as-silverpoint-173560100.jpg" alt="Sketch 4" class="gallery-image">
+            <img src="https://i.pinimg.com/564x/bd/40/cd/bd40cd0f324574f4eba76ac85824a525.jpg" alt="Sketch 5" class="gallery-image">
+        </div>
+        <div class="navigation">
+            <button class="prev">&#10094;</button>
+            <button class="next">&#10095;</button>
+        </div>
+    </div>
+    <div id="drawings-gallery" class="gallery-container hidden">
+        <h2>Drawings</h2>
+        <div class="gallery">
+            <img src="https://i.ytimg.com/vi/33OrlQOye48/maxresdefault.jpg" alt="Drawing 1" class="gallery-image">
+            <img src="https://i.pinimg.com/736x/43/fb/d9/43fbd9ffb6b9135e13bddd0bbbfefd08.jpg" alt="Drawing 2" class="gallery-image">
+            <img src="https://clipart-library.com/images/rcjr5jy9i.jpg" alt="Drawing 3" class="gallery-image">
+            <img src="https://s2.dmcdn.net/v/S8RCF1UWEw1xWVNQ0/x1080" alt="Drawing 4" class="gallery-image">
+            <img src="https://i.ytimg.com/vi/ecxBuug3tyQ/hqdefault.jpg" alt="Drawing 5" class="gallery-image">
+        </div>
+        <div class="navigation">
+            <button class="prev">&#10094;</button>
+            <button class="next">&#10095;</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+.................
+
+/* styles.css */
+body {
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background: url('https://t3.ftcdn.net/jpg/03/59/21/62/360_F_359216202_AXS6T4d8rCETqVM9oH1dRfQpxWd3swws.jpg') no-repeat center center;
+    background-size: 50%;
+    background-blend-mode: lighten;
+    background-color: rgba(240, 240, 240, 0.9);
+    overflow: hidden;
+}
+
+header {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+header .logo {
+    max-width: 100px;
+    height: auto;
+    display: block;
+    margin: 0 auto 10px;
+}
+
+header h1 {
+    font-size: 2.5em;
+    color: #333;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.button-container {
+    margin-bottom: 20px;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 10px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: scale(1.1);
+}
+
+.gallery-container {
+    position: relative;
+    width: 90%;
+    max-width: 800px;
+    margin: 20px 0;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.gallery-container h2 {
+    text-align: center;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    margin: 0;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.gallery {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.gallery-image {
+    min-width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    border-bottom: 1px solid #ccc;
+}
+
+.navigation {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+}
+
+button.prev, button.next {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 50%;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button.prev:hover, button.next:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+    transform: scale(1.1);
+}
+
+.hidden {
+    display: none;
+}
+...............
+
+// script.js
+document.addEventListener("DOMContentLoaded", function() {
+    const sketchesGallery = document.getElementById("sketches-gallery");
+    const drawingsGallery = document.getElementById("drawings-gallery");
+    const showSketchesButton = document.getElementById("show-sketches");
+    const showDrawingsButton = document.getElementById("show-drawings");
+
+    showSketchesButton.addEventListener("click", function() {
+        sketchesGallery.classList.remove("hidden");
+        drawingsGallery.classList.add("hidden");
+    });
+
+    showDrawingsButton.addEventListener("click", function() {
+        drawingsGallery.classList.remove("hidden");
+        sketchesGallery.classList.add("hidden");
+    });
+
+    function setupNavigation(galleryContainer) {
+        const gallery = galleryContainer.querySelector(".gallery");
+        const images = gallery.querySelectorAll(".gallery-image");
+        const prevButton = galleryContainer.querySelector(".prev");
+        const nextButton = galleryContainer.querySelector(".next");
+        let currentIndex = 0;
+
+        function updateGallery() {
+            const offset = -currentIndex * 100;
+            gallery.style.transform = `translateX(${offset}%)`;
+        }
+
+        prevButton.addEventListener("click", function() {
+            currentIndex = (currentIndex > 0) ? currentIndex - 1 : images.length - 1;
+            updateGallery();
+        });
+
+        nextButton.addEventListener("click", function() {
+            currentIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : 0;
+            updateGallery();
+        });
+    }
+
+    setupNavigation(sketchesGallery);
+    setupNavigation(drawingsGallery);
+});
+

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Calc</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>MY CALC</h1>
+        <button id="theme-toggle" aria-label="Toggle Theme">🌙</button>
+    </header>
+    <main>
+        <div class="calculator">
+            <div id="display" class="display">0</div>
+            <div id="history" class="history"></div>
+            <div class="buttons">
+                <button class="btn-function" data-function="AC">AC</button>
+                <button class="btn-function" data-function="DEL">DEL</button>
+                <button class="btn-function" data-function="%">%</button>
+                <button class="btn-function" data-function="÷">÷</button>
+                <button class="btn" data-number="7">7</button>
+                <button class="btn" data-number="8">8</button>
+                <button class="btn" data-number="9">9</button>
+                <button class="btn-function" data-function="×">×</button>
+                <button class="btn" data-number="4">4</button>
+                <button class="btn" data-number="5">5</button>
+                <button class="btn" data-number="6">6</button>
+                <button class="btn-function" data-function="-">−</button>
+                <button class="btn" data-number="1">1</button>
+                <button class="btn" data-number="2">2</button>
+                <button class="btn" data-number="3">3</button>
+                <button class="btn-function" data-function="+">+</button>
+                <button class="btn-zero" data-number="0">0</button>
+                <button class="btn" data-number=".">.</button>
+                <button class="btn-equal" data-function="=">=</button>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 My Calc. All rights reserved.</p>
+    </footer>
+    <script src="scripts.js"></script>
+</body>
+</html>
+.....................................
+body {
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f4f4f4;
+    transition: background-color 0.3s;
+}
+
+body.dark-mode {
+    background-color: #333;
+    color: #fff;
+}
+
+header {
+    background-color: #333;
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+    position: relative;
+}
+
+header h1 {
+    color: #fff;
+    margin: 0;
+}
+
+header button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.5em;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+header button:focus {
+    outline: none;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+}
+
+.calculator {
+    width: 360px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    background-color: #333;
+    border: 1px solid #222;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.display {
+    width: 100%;
+    background-color: #1c1c1c;
+    color: #0ff;
+    font-size: 2.5em;
+    text-align: right;
+    padding: 20px;
+    border-bottom: 2px solid #000;
+    box-sizing: border-box;
+}
+
+.history {
+    width: 100%;
+    background-color: #2c2c2c;
+    color: #fff;
+    font-size: 1em;
+    text-align: right;
+    padding: 10px;
+    box-sizing: border-box;
+    max-height: 100px;
+    overflow-y: auto;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    width: 100%;
+    background-color: #222;
+}
+
+button {
+    border: none;
+    padding: 20px;
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn, .btn-zero {
+    background-color: #444;
+    color: #fff;
+}
+
+.btn:active, .btn-zero:active {
+    background-color: #666;
+    transform: scale(0.98);
+}
+
+.btn-function {
+    background-color: #ff9500;
+    color: #fff;
+}
+
+.btn-function:active {
+    background-color: #e68a00;
+    transform: scale(0.98);
+}
+
+.btn-equal {
+    background-color: #1e90ff;
+    color: #fff;
+    grid-row: span 2;
+}
+
+.btn-equal:active {
+    background-color: #1c86ee;
+    transform: scale(0.98);
+}
+
+.btn-zero {
+    grid-column: span 2;
+}
+
+footer {
+    background-color: #333;
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+}
+
+footer p {
+    color: #fff;
+    margin: 0;
+}
+
+body.dark-mode footer {
+    background-color: #222;
+}
+........................................
+
+document.addEventListener("DOMContentLoaded", function() {
+    const display = document.getElementById('display');
+    const history = document.getElementById('history');
+    const themeToggle = document.getElementById('theme-toggle');
+    let currentInput = '0'; 
+    let lastOperator = '';
+    let resetDisplay = false;
+
+    function updateDisplay(value) {
+        display.innerText = value;
+    }
+
+    function appendToDisplay(value) {
+        if (resetDisplay) {
+            currentInput = '';
+            resetDisplay = false;
+        }
+        if (currentInput === '0' && value !== '.') {
+            currentInput = value;
+        } else {
+            currentInput += value;
+        }
+        updateDisplay(currentInput);
+    }
+
+    function clearDisplay() {
+        currentInput = '0';
+        lastOperator = '';
+        updateDisplay(currentInput);
+    }
+
+    function deleteLast() {
+        currentInput = currentInput.slice(0, -1) || '0';
+        updateDisplay(currentInput);
+    }
+
+    function calculate() {
+        try {
+            if (lastOperator) {
+                const result = eval(currentInput.replace('×', '*').replace('÷', '/').replace('%', '/100')).toString();
+                history.innerHTML += `<div>${currentInput} = ${result}</div>`;
+                currentInput = result;
+                updateDisplay(currentInput);
+                lastOperator = '';
+                resetDisplay = true;
+            }
+        } catch {
+            updateDisplay('Error');
+            currentInput = '0';
+            lastOperator = '';
+        }
+    }
+
+    function handleOperator(operator) {
+        if (resetDisplay) {
+            resetDisplay = false;
+        }
+        if (['÷', '×', '-', '+'].includes(currentInput.slice(-1))) {
+            currentInput = currentInput.slice(0, -1);
+        }
+        currentInput += operator;
+        lastOperator = operator;
+        updateDisplay(currentInput);
+    }
+
+    function toggleTheme() {
+        document.body.classList.toggle('dark-mode');
+    }
+
+    themeToggle.addEventListener('click', toggleTheme);
+
+    document.querySelectorAll('.btn').forEach(button => {
+        button.addEventListener('click', function() {
+            appendToDisplay(button.innerText);
+        });
+    });
+
+    document.querySelectorAll('.btn-function').forEach(button => {
+        button.addEventListener('click', function() {
+            const value = button.innerText;
+            switch (value) {
+                case 'AC':
+                    clearDisplay();
+                    break;
+                case 'DEL':
+                    deleteLast();
+                    break;
+                case '÷':
+                case '×':
+                case '−':
+                case '+':
+                case '%':
+                    handleOperator(value);
+                    break;
+                default:
+                    break;
+            }
+        });
+    });
+
+    document.querySelector('.btn-equal').addEventListener('click', calculate);
+});
